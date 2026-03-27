@@ -1,0 +1,32 @@
+.page { min-height: 100vh; }
+
+.header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.headerInner { max-width: 900px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brandIcon { color: var(--accent); font-size: 20px; animation: spin 8s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.brandName { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.headerRight { display: flex; align-items: center; gap: 12px; }
+.emailBadge { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 13px; color: var(--text2); }
+.logoutBtn { background: none; border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; color: var(--text2); cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.logoutBtn:hover { border-color: var(--danger); color: var(--danger); }
+
+.main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+.hero { margin-bottom: 48px; }
+.heroTitle { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+.heroSub { color: var(--text2); font-size: 15px; margin-bottom: 28px; }
+.newBtn { background: var(--accent); color: white; border: none; border-radius: 12px; padding: 13px 24px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.newBtn span { font-size: 20px; line-height: 1; }
+.newBtn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,106,255,0.3); }
+
+.loading { display: flex; justify-content: center; padding: 80px 0; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: rotate 0.8s linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+.empty { text-align: center; padding: 80px 0; color: var(--text2); }
+.emptyIcon { font-size: 48px; color: var(--accent); opacity: 0.3; margin-bottom: 16px; }
+.empty p { font-size: 18px; margin-bottom: 20px; }
+.empty button { background: none; border: 1px solid var(--accent); color: var(--accent); border-radius: 12px; padding: 12px 24px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 15px; transition: all 0.2s; }
+.empty button:hover { background: var(--accent); color: white; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }

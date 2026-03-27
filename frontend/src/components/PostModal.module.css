@@ -1,0 +1,26 @@
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 520px; animation: slideUp 0.25s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.modalHeader { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid var(--border); }
+.modalHeader h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+.closeBtn { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; color: var(--text2); font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.closeBtn:hover { border-color: var(--danger); color: var(--danger); }
+
+.form { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 12px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+.field input, .field textarea { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,106,255,0.15); }
+.field input::placeholder, .field textarea::placeholder { color: var(--text2); opacity: 0.4; }
+
+.error { background: rgba(255,77,109,0.1); border: 1px solid rgba(255,77,109,0.3); color: var(--danger); border-radius: 10px; padding: 12px 16px; font-size: 14px; }
+
+.btns { display: flex; gap: 12px; justify-content: flex-end; }
+.cancelBtn { background: none; border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; color: var(--text2); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; transition: all 0.15s; }
+.cancelBtn:hover { border-color: var(--text2); color: var(--text); }
+.saveBtn { background: var(--accent); border: none; border-radius: 12px; padding: 12px 24px; color: white; cursor: pointer; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; transition: all 0.15s; }
+.saveBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+.saveBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }

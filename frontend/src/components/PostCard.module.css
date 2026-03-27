@@ -1,0 +1,28 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent-color); opacity: 0.8; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); border-color: var(--accent-color); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+.top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color); flex-shrink: 0; }
+.date { font-size: 12px; color: var(--text2); flex: 1; }
+.actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; }
+.card:hover .actions { opacity: 1; }
+
+.editBtn, .deleteBtn { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: all 0.15s; color: var(--text2); }
+.editBtn:hover { border-color: var(--accent); color: var(--accent); background: rgba(124,106,255,0.1); }
+.deleteBtn:hover { border-color: var(--danger); color: var(--danger); background: rgba(255,77,109,0.1); }
+
+.title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+.content { color: var(--text2); font-size: 14px; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 20px; }
+.footer { border-top: 1px solid var(--border); padding-top: 16px; }
+.author { font-size: 13px; color: var(--accent-color); font-weight: 500; }
