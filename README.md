@@ -2,33 +2,6 @@
 
 Монорепо: Express бэкенд + React фронтенд на Vite.
 
-## Структура
-
-```
-api-backend-study/
-├── package.json          ← корневой (запуск обоих сразу)
-├── .gitignore
-├── backend/
-│   ├── package.json
-│   ├── server.js
-│   ├── data/db.js
-│   ├── middleware/auth.js
-│   └── routes/
-│       ├── auth.js
-│       └── posts.js
-└── frontend/
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── main.jsx
-        ├── index.css
-        ├── App.jsx
-        ├── api.js
-        ├── pages/
-        └── components/
-```
-
 ## Запуск
 
 ```bash
