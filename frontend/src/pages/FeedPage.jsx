@@ -12,6 +12,7 @@ export default function FeedPage() {
   const [editPost, setEditPost] = useState(null);
   const navigate = useNavigate();
   const email = localStorage.getItem('email');
+  const isAdmin = email === import.meta.env.VITE_ADMIN_EMAIL;
 
   const fetchPosts = async () => {
     try {
@@ -58,6 +59,10 @@ export default function FeedPage() {
           </div>
           <div className={styles.headerRight}>
             <span className={styles.emailBadge}>{email}</span>
+            <button onClick={() => navigate('/support')} className={styles.logoutBtn}>Поддержка</button>
+            {isAdmin && (
+              <button onClick={() => navigate('/admin')} className={styles.logoutBtn}>Админ</button>
+            )}
             <button onClick={handleLogout} className={styles.logoutBtn}>Выйти</button>
           </div>
         </div>

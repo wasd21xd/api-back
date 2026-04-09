@@ -1,0 +1,57 @@
+.page { min-height: 100vh; }
+
+.header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.headerInner { max-width: 900px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brandIcon { color: var(--accent); font-size: 20px; }
+.brandName { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.headerRight { display: flex; align-items: center; gap: 12px; }
+.emailBadge { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 13px; color: var(--text2); }
+.backBtn { background: none; border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; color: var(--text2); cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.backBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+.hero { margin-bottom: 36px; }
+.heroTitle { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+
+.stats { display: flex; gap: 16px; }
+.stat { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; text-align: center; }
+.statNum { display: block; font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; }
+.statLabel { font-size: 12px; color: var(--text2); }
+.openNum { color: var(--accent); }
+.closedNum { color: #4caf7d; }
+
+.filters { display: flex; gap: 8px; margin-bottom: 24px; }
+.filterBtn { background: none; border: 1px solid var(--border); border-radius: 20px; padding: 8px 18px; color: var(--text2); cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.filterBtn:hover { border-color: var(--accent); color: var(--accent); }
+.filterBtn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.loading { display: flex; justify-content: center; padding: 60px 0; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: rotate 0.8s linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+.empty { text-align: center; padding: 60px 0; color: var(--text2); }
+.emptyIcon { font-size: 40px; color: var(--accent); opacity: 0.3; margin-bottom: 12px; }
+.empty p { font-size: 16px; }
+
+.list { display: flex; flex-direction: column; gap: 14px; }
+.ticket { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: border-color 0.2s; }
+.ticket.open { border-left: 3px solid var(--accent); }
+.ticket.closed { border-left: 3px solid #4caf7d; opacity: 0.7; }
+.ticket:hover { border-color: var(--accent); }
+
+.ticketHeader { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.ticketId { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 14px; }
+.ticketEmail { font-size: 13px; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; }
+.statusBadge { border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 600; }
+.statusBadge.open { background: rgba(124,106,255,0.15); color: var(--accent); border: 1px solid rgba(124,106,255,0.3); }
+.statusBadge.closed { background: rgba(76,175,125,0.15); color: #4caf7d; border: 1px solid rgba(76,175,125,0.3); }
+.ticketDate { margin-left: auto; font-size: 12px; color: var(--text2); }
+
+.ticketMessage { color: var(--text); font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+
+.actionBtn { border: none; border-radius: 10px; padding: 8px 18px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.closeBtn { background: rgba(124,106,255,0.15); color: var(--accent); border: 1px solid rgba(124,106,255,0.3); }
+.closeBtn:hover { background: var(--accent); color: white; }
+.reopenBtn { background: rgba(76,175,125,0.15); color: #4caf7d; border: 1px solid rgba(76,175,125,0.3); }
+.reopenBtn:hover { background: #4caf7d; color: white; }

@@ -19,9 +19,11 @@ app.use(express.json());
 
 const authRoutes = require('./routes/auth');
 const postsRoutes = require('./routes/posts');
+const supportRoutes = require('./routes/support');
 
 app.use('/auth', authRoutes);
 app.use('/posts', postsRoutes);
+app.use('/support', supportRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: 'Сервер работает! 🚀' });
