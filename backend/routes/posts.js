@@ -1,46 +1,96 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../data/db');
+const pool = require('../data/db');
 const { authMiddleware } = require('../middleware/auth');
 
 router.use(authMiddleware);
 
-const livePosts = () => db.posts.filter(p => !p.deletedAt);
-
-router.get('/', (req, res) => {
-  const posts = livePosts();
-  res.json({ posts, total: posts.length });
+// Переименовываем поля под camelCase как ожидает фронтенд
+const mapPost = (row) => ({
+  id: row.id,
+  title: row.title,
+  content: row.content,
+  authorEmail: row.author_email,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+  deletedAt: row.deleted_at,
 });
 
-router.get('/:id', (req, res) => {
-  const post = db.posts.find(p => p.id === req.params.id && !p.deletedAt);
-  if (!post) return res.status(404).json({ error: 'Пост не найден' });
-  res.json(post);
+router.get('/', async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM posts WHERE deleted_at IS NULL ORDER BY created_at DESC'
+    );
+    const posts = rows.map(mapPost);
+    res.json({ posts, total: posts.length });
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
 });
 
-router.post('/', (req, res) => {
+router.get('/:id', async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM posts WHERE id = $1 AND deleted_at IS NULL',
+      [req.params.id]
+    );
+    if (!rows[0]) return res.status(404).json({ error: 'Пост не найден' });
+    res.json(mapPost(rows[0]));
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
+
+router.post('/', async (req, res) => {
   const { title, content } = req.body;
   if (!title || !content) return res.status(400).json({ error: 'Заголовок и текст обязательны' });
-  const newPost = { id: Date.now().toString(), title, content, authorEmail: req.user.email, createdAt: new Date().toISOString(), deletedAt: null };
-  db.posts.push(newPost);
-  res.status(201).json({ message: 'Пост создан!', post: newPost });
+  try {
+    const { rows } = await pool.query(
+      'INSERT INTO posts (title, content, author_email) VALUES ($1, $2, $3) RETURNING *',
+      [title, content, req.user.email]
+    );
+    res.status(201).json({ message: 'Пост создан!', post: mapPost(rows[0]) });
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
 });
 
-router.put('/:id', (req, res) => {
-  const idx = db.posts.findIndex(p => p.id === req.params.id && !p.deletedAt);
-  if (idx === -1) return res.status(404).json({ error: 'Пост не найден' });
-  if (db.posts[idx].authorEmail !== req.user.email) return res.status(403).json({ error: 'Нельзя редактировать чужой пост' });
-  const { title, content } = req.body;
-  db.posts[idx] = { ...db.posts[idx], title: title || db.posts[idx].title, content: content || db.posts[idx].content, updatedAt: new Date().toISOString() };
-  res.json({ message: 'Пост обновлён!', post: db.posts[idx] });
+router.put('/:id', async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM posts WHERE id = $1 AND deleted_at IS NULL',
+      [req.params.id]
+    );
+    if (!rows[0]) return res.status(404).json({ error: 'Пост не найден' });
+    if (rows[0].author_email !== req.user.email)
+      return res.status(403).json({ error: 'Нельзя редактировать чужой пост' });
+
+    const { title, content } = req.body;
+    const { rows: updated } = await pool.query(
+      'UPDATE posts SET title = $1, content = $2, updated_at = NOW() WHERE id = $3 RETURNING *',
+      [title || rows[0].title, content || rows[0].content, req.params.id]
+    );
+    res.json({ message: 'Пост обновлён!', post: mapPost(updated[0]) });
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  const idx = db.posts.findIndex(p => p.id === req.params.id && !p.deletedAt);
-  if (idx === -1) return res.status(404).json({ error: 'Пост не найден' });
-  if (db.posts[idx].authorEmail !== req.user.email) return res.status(403).json({ error: 'Нельзя удалить чужой пост' });
-  db.posts[idx].deletedAt = new Date().toISOString();
-  res.json({ message: 'Пост удалён!' });
+router.delete('/:id', async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM posts WHERE id = $1 AND deleted_at IS NULL',
+      [req.params.id]
+    );
+    if (!rows[0]) return res.status(404).json({ error: 'Пост не найден' });
+    if (rows[0].author_email !== req.user.email)
+      return res.status(403).json({ error: 'Нельзя удалить чужой пост' });
+
+    await pool.query('UPDATE posts SET deleted_at = NOW() WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Пост удалён!' });
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
 });
 
 module.exports = router;
