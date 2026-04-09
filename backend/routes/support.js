@@ -13,6 +13,7 @@ pool.query(`
   )
 `).catch(err => console.error('Ошибка создания таблицы support_tickets:', err.message));
 
+// Отправить обращение
 router.post('/', verifyToken, async (req, res) => {
   const { message } = req.body;
   if (!message || !message.trim()) return res.status(400).json({ error: 'Сообщение не может быть пустым' });
@@ -21,12 +22,16 @@ router.post('/', verifyToken, async (req, res) => {
       'INSERT INTO support_tickets (user_email, message) VALUES ($1, $2) RETURNING *',
       [req.user.email, message.trim()]
     );
+    // Уведомить всех через WebSocket о новом тикете
+    const io = req.app.get('io');
+    if (io) io.emit('ticket_updated');
     res.status(201).json({ ticket: rows[0] });
   } catch (err) {
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
+// Получить свои обращения
 router.get('/', verifyToken, async (req, res) => {
   try {
     const { rows } = await pool.query(
@@ -39,6 +44,7 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
+// Получить все тикеты (админ)
 router.get('/admin/all', verifyToken, async (req, res) => {
   if (req.user.email !== process.env.ADMIN_EMAIL)
     return res.status(403).json({ error: 'Нет доступа' });
@@ -50,6 +56,7 @@ router.get('/admin/all', verifyToken, async (req, res) => {
   }
 });
 
+// Закрыть / открыть тикет (админ)
 router.patch('/admin/:id', verifyToken, async (req, res) => {
   if (req.user.email !== process.env.ADMIN_EMAIL)
     return res.status(403).json({ error: 'Нет доступа' });
@@ -61,7 +68,22 @@ router.patch('/admin/:id', verifyToken, async (req, res) => {
       [status, req.params.id]
     );
     if (!rows[0]) return res.status(404).json({ error: 'Тикет не найден' });
+    const io = req.app.get('io');
+    if (io) io.emit('ticket_updated');
     res.json({ ticket: rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
+
+// Получить сообщения тикета
+router.get('/:id/messages', verifyToken, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM ticket_messages WHERE ticket_id = $1 ORDER BY created_at ASC',
+      [req.params.id]
+    );
+    res.json({ messages: rows });
   } catch (err) {
     res.status(500).json({ error: 'Ошибка сервера' });
   }
