@@ -1,0 +1,65 @@
+.page { min-height: 100vh; background: var(--bg); }
+
+.header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.headerInner { max-width: 900px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brandIcon { font-size: 24px; }
+.brandName { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.backBtn { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; color: var(--text2); cursor: pointer; font-size: 13px; transition: all 0.2s; }
+.backBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+
+.userSection, .devicesSection { margin-bottom: 48px; }
+
+.sectionTitle { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; }
+.field input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; }
+
+.logoutBtn { background: var(--accent); border: none; border-radius: 8px; padding: 12px 24px; color: white; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; align-self: flex-start; }
+.logoutBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.devicesHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.devicesCount { color: var(--text2); font-size: 14px; }
+
+.empty { text-align: center; padding: 40px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; color: var(--text2); }
+
+.devicesList { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+
+.deviceCard { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; transition: all 0.2s; }
+.deviceCard:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(124,106,255,0.1); }
+
+.deviceInfo { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+.deviceNameRow { display: flex; align-items: center; gap: 12px; }
+.deviceName { font-size: 16px; font-weight: 600; color: var(--text); }
+.badge { background: rgba(124,106,255,0.2); color: var(--accent); padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+
+.deviceDetails { display: flex; gap: 20px; flex-wrap: wrap; }
+.detail { display: flex; align-items: center; gap: 8px; }
+.label { font-size: 12px; color: var(--text2); font-weight: 500; }
+.value { font-size: 13px; color: var(--text); font-family: 'Monaco', monospace; }
+
+.timestamps { display: flex; gap: 24px; font-size: 12px; color: var(--text2); border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+.timeLabel { font-weight: 500; display: block; margin-bottom: 2px; }
+
+.removeBtn { background: rgba(255,77,109,0.1); border: 1px solid rgba(255,77,109,0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--danger); font-size: 16px; transition: all 0.2s; flex-shrink: 0; }
+.removeBtn:hover { background: rgba(255,77,109,0.2); border-color: var(--danger); }
+
+.logoutAllBtn { background: none; border: 2px solid var(--danger); border-radius: 8px; padding: 12px 24px; color: var(--danger); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; transition: all 0.2s; width: 100%; }
+.logoutAllBtn:hover { background: rgba(255,77,109,0.1); }
+
+.loading { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: rotate 0.8s linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+  .deviceDetails { flex-direction: column; gap: 8px; }
+  .timestamps { flex-direction: column; gap: 12px; }
+  .deviceCard { flex-direction: column; }
+  .removeBtn { align-self: flex-end; }
+}

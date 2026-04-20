@@ -3,6 +3,7 @@ import AuthPage from './pages/AuthPage';
 import FeedPage from './pages/FeedPage';
 import SupportPage from './pages/SupportPage';
 import AdminPage from './pages/AdminPage';
+import ProfilePage from './pages/ProfilePage';
 
 function PrivateRoute({ children }) {
   return localStorage.getItem('token') ? children : <Navigate to="/login" />;
@@ -13,6 +14,8 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<AuthPage />} />
       <Route path="/" element={<PrivateRoute><FeedPage /></PrivateRoute>} />
+      <Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>} />
+      <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
       <Route path="/support" element={<PrivateRoute><SupportPage /></PrivateRoute>} />
       <Route path="/admin" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
       <Route path="*" element={<Navigate to="/" />} />

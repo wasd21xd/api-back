@@ -5,15 +5,37 @@ import styles from './PostModal.module.css';
 export default function PostModal({ post, onClose, onSaved }) {
   const [title, setTitle] = useState(post?.title || '');
   const [content, setContent] = useState(post?.content || '');
+  const [selectedTags, setSelectedTags] = useState(post?.tags?.map(t => t.id) || []);
+  const [allTags, setAllTags] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const isEdit = !!post;
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await api.get('/posts/tags/list');
+        setAllTags(res.data.tags);
+      } catch (err) {
+        console.error('Ошибка при загрузке тегов', err);
+      }
+    };
+    fetchTags();
+  }, []);
 
   useEffect(() => {
     const handler = (e) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
+
+  const handleTagToggle = (tagId) => {
+    setSelectedTags(prev =>
+      prev.includes(tagId)
+        ? prev.filter(id => id !== tagId)
+        : [...prev, tagId]
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +44,18 @@ export default function PostModal({ post, onClose, onSaved }) {
     setError('');
     try {
       if (isEdit) {
-        const res = await api.put(`/posts/${post.id}`, { title, content });
+        const res = await api.put(`/posts/${post.id}`, { 
+          title, 
+          content,
+          tagIds: selectedTags 
+        });
         onSaved(res.data.post, true);
       } else {
-        const res = await api.post('/posts', { title, content });
+        const res = await api.post('/posts', { 
+          title, 
+          content,
+          tagIds: selectedTags 
+        });
         onSaved(res.data.post, false);
       }
     } catch (err) {
@@ -51,6 +81,23 @@ export default function PostModal({ post, onClose, onSaved }) {
             <label>Текст</label>
             <textarea value={content} onChange={e => setContent(e.target.value)} placeholder="Напишите что-нибудь..." rows={6} required />
           </div>
+          
+          <div className={styles.field}>
+            <label>Теги</label>
+            <div className={styles.tagsGrid}>
+              {allTags.map(tag => (
+                <button
+                  key={tag.id}
+                  type="button"
+                  className={`${styles.tagBtn} ${selectedTags.includes(tag.id) ? styles.tagBtnActive : ''}`}
+                  onClick={() => handleTagToggle(tag.id)}
+                >
+                  {tag.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {error && <div className={styles.error}>{error}</div>}
           <div className={styles.btns}>
             <button type="button" onClick={onClose} className={styles.cancelBtn}>Отмена</button>

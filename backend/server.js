@@ -5,6 +5,7 @@ const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('./middleware/auth');
 const pool = require('./data/db');
+const initializeDatabase = require('./db-init');
 
 const app = express();
 const server = http.createServer(app);
@@ -25,16 +26,22 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 const postsRoutes = require('./routes/posts');
 const supportRoutes = require('./routes/support');
+const profileRoutes = require('./routes/profile');
+const commentsRoutes = require('./routes/comments');
+const reactionsRoutes = require('./routes/reactions');
 
 app.use('/auth', authRoutes);
 app.use('/posts', postsRoutes);
 app.use('/support', supportRoutes);
+app.use('/profile', profileRoutes);
+app.use('/comments', commentsRoutes);
+app.use('/reactions', reactionsRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Сервер работает! 🚀' });
 });
 
-// Создать таблицу сообщений чата
+
 pool.query(`
   CREATE TABLE IF NOT EXISTS ticket_messages (
     id SERIAL PRIMARY KEY,
@@ -63,7 +70,7 @@ io.on('connection', (socket) => {
     socket.join(`ticket_${ticketId}`);
   });
 
-  // Покинуть комнату
+
   socket.on('leave_ticket', (ticketId) => {
     socket.leave(`ticket_${ticketId}`);
   });
@@ -90,6 +97,16 @@ io.on('connection', (socket) => {
 app.set('io', io);
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`✅ Сервер запущен: http://localhost:${PORT}`);
-});
+
+// Инициализируем БД и запускаем сервер
+(async () => {
+  try {
+    await initializeDatabase();
+    server.listen(PORT, () => {
+      console.log(`✅ Сервер запущен: http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('❌ Не удалось запустить сервер:', err.message);
+    process.exit(1);
+  }
+})();

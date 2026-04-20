@@ -1,0 +1,72 @@
+.container {
+  margin: 15px 0;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.container textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.container textarea:disabled {
+  background: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.counter {
+  font-size: 12px;
+  color: #999;
+}
+
+.container button[type="submit"] {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.container button[type="submit"]:hover:not(:disabled) {
+  background: #45a049;
+}
+
+.container button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #f44336;
+  font-size: 13px;
+  padding: 8px 10px;
+  background: #ffebee;
+  border-radius: 4px;
+  margin-top: 8px;
+}

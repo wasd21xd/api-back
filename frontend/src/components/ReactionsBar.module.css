@@ -1,0 +1,64 @@
+.container {
+  margin: 15px 0;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.reactionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reactionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.reactionBtn:hover {
+  background: #f0f0f0;
+  border-color: #4CAF50;
+  transform: scale(1.05);
+}
+
+.reactionBtn.active {
+  background: #e8f5e9;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.emoji {
+  display: inline-block;
+  font-size: 18px;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  min-width: 16px;
+  text-align: center;
+}
+
+.total {
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
+  text-align: center;
+  font-style: italic;
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  color: #666;
+}

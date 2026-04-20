@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../data/db');
 const { SECRET_KEY } = require('../middleware/auth');
+const getDeviceInfo = require('../utils/deviceInfo');
 
 router.post('/register', async (req, res) => {
     const { email, password } = req.body;
@@ -34,9 +35,19 @@ router.post('/login', async (req, res) => {
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) return res.status(401).json({ error: 'Неверный email или пароль' });
 
+        // Получаем информацию об устройстве
+        const deviceInfo = getDeviceInfo(req);
+        
+        // Сохраняем информацию об устройстве
+        await pool.query(
+            'INSERT INTO devices (user_email, device_name, browser, os, ip_address) VALUES ($1, $2, $3, $4, $5)',
+            [email, deviceInfo.device_name, deviceInfo.browser, deviceInfo.os, deviceInfo.ip_address]
+        );
+
         const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '7d' });
         res.json({ token, email: user.email });
     } catch (err) {
+        console.error('Login error:', err);
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });

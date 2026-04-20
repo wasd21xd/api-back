@@ -1,0 +1,160 @@
+.container {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 2px solid #eee;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.commentItem {
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #4CAF50;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.author {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.date {
+  font-size: 12px;
+  color: #999;
+}
+
+.content {
+  margin: 8px 0;
+  color: #555;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.editBtn,
+.deleteBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.editBtn {
+  background: #2196F3;
+  color: white;
+}
+
+.editBtn:hover {
+  background: #1976D2;
+}
+
+.deleteBtn {
+  background: #f44336;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background: #d32f2f;
+}
+
+.editForm {
+  margin-top: 10px;
+}
+
+.editForm textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.editButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.saveBtn,
+.cancelBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.saveBtn {
+  background: #4CAF50;
+  color: white;
+}
+
+.saveBtn:hover {
+  background: #45a049;
+}
+
+.cancelBtn {
+  background: #999;
+  color: white;
+}
+
+.cancelBtn:hover {
+  background: #777;
+}
+
+.loadMoreBtn {
+  padding: 10px;
+  margin-top: 15px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.loadMoreBtn:hover {
+  background: #e0e0e0;
+}
